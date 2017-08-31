@@ -1,9 +1,13 @@
 import React from 'react';
 
+import Section from '../../../common/components/Section';
+
 class Planets extends React.PureComponent {
   render() {
     return (
-      <header>Planets</header>
+      <Section>
+        Planets
+      </Section>
     );
   }
 }

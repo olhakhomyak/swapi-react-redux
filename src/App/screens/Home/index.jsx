@@ -1,9 +1,13 @@
 import React from 'react';
 
+import Section from '../../../common/components/Section';
+
 class Home extends React.PureComponent {
   render() {
     return (
-      <header>Home</header>
+      <Section>
+        Home
+      </Section>
     );
   }
 }

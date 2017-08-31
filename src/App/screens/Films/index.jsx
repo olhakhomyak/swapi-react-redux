@@ -1,9 +1,13 @@
 import React from 'react';
 
+import Section from '../../../common/components/Section';
+
 class Films extends React.PureComponent {
   render() {
     return (
-      <header>Films</header>
+      <Section>
+        Films
+      </Section>
     );
   }
 }
