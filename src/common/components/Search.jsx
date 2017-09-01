@@ -4,8 +4,17 @@ import GrommetSearch from 'grommet/components/Search';
 
 class Search extends React.PureComponent {
   render() {
-    return <GrommetSearch fill inline />;
+    return <GrommetSearch {...this.props} />;
   }
 }
+
+Search.defaultProps = {
+  fill: true,
+  inline: true,
+  dropAlign: {
+    right: 'right',
+    top: 'top',
+  },
+};
 
 export default Search;

@@ -2,12 +2,11 @@ import React from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
 import AppContainer from '../common/components/AppContainer';
-import Header from '../common/components/Header';
 import Title from '../common/components/Title';
-import Search from '../common/components/Search';
-import Menu from '../common/components/Menu';
 import Article from '../common/components/Article';
 import Footer from '../common/components/Footer';
+
+import SearchHeader from './components/SearchHeader';
 
 import Films from './screens/Films';
 import Home from './screens/Home';
@@ -20,24 +19,37 @@ import Vehicles from './screens/Vehicles';
 import './index.scss';
 
 class App extends React.Component {
+  constructor(...args) {
+    super(...args);
+
+    this.state = {
+      searchResult: {
+        count: 0,
+        next: null,
+        previous: null,
+        results: [],
+      },
+    };
+  }
+
+  setSearchResult(result) {
+    this.setState({ searchResult: result });
+  }
+
   render() {
     return (
       <BrowserRouter>
         <AppContainer>
           <Article>
-            <Header>
-              <Title>
-                SWAPI Header
-              </Title>
-              <Search />
-              <Menu label="Type">
-                <span>SomeSomeSome</span>
-                <span>SomeSome</span>
-                <span>Some</span>
-              </Menu>
-            </Header>
+            <SearchHeader onResult={result => this.setSearchResult(result)} />
             <Switch>
-              <Route exact path="/" component={Home} />
+              <Route
+                exact
+                path="/"
+                render={
+                  () => <Home searchResult={this.state.searchResult} />
+                }
+              />
               <Route path="/films" component={Films} />
               <Route path="/people" component={People} />
               <Route path="/planets" component={Planets} />

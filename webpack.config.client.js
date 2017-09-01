@@ -6,6 +6,7 @@ module.exports = {
   devtool: 'inline-source-map',
   entry: [
     'babel-polyfill',
+    'whatwg-fetch',
     'react-hot-loader/patch',
     './src/client.jsx',
   ],
