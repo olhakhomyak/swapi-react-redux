@@ -2,7 +2,7 @@ import React from 'react';
 
 import GrommetAnchor from 'grommet/components/Anchor';
 
-class Anchor extends React.PureComponent {
+class Anchor extends React.Component {
   render() {
     return <GrommetAnchor {...this.props} />;
   }

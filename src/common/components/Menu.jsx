@@ -2,7 +2,7 @@ import React from 'react';
 
 import GrommetMenu from 'grommet/components/Menu';
 
-class Menu extends React.PureComponent {
+class Menu extends React.Component {
   render() {
     return <GrommetMenu {...this.props} />;
   }

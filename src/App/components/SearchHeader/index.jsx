@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 
 import Header from '../../../common/components/Header';
 import Heading from '../../../common/components/Heading';
@@ -12,12 +13,13 @@ import './index.scss';
 
 const DELAY = 333;
 
-class SearchHeader extends React.PureComponent {
+class SearchHeader extends React.Component {
   constructor(...args) {
     super(...args);
 
     this.private = {
       throttleTimeout: -1,
+      currentSearchQuery: '',
     };
 
     this.state = {
@@ -25,7 +27,7 @@ class SearchHeader extends React.PureComponent {
       resourceTypes: [],
     };
 
-    this.onSwapiSearch = this.onSwapiSearch.bind(this);
+    this.onHeaderSearch = this.onHeaderSearch.bind(this);
   }
 
   componentWillMount() {
@@ -35,14 +37,19 @@ class SearchHeader extends React.PureComponent {
       .then(json => this.setState({ resourceTypes: Object.keys(json) }));
   }
 
-  onSwapiSearch(e) {
+  onHeaderSearch(e) {
     window.clearTimeout(this.private.throttleTimeout);
 
     this.private.throttleTimeout = window.setTimeout(() => this.search(e.target.value), DELAY);
   }
 
   setCurrentResourceType(type) {
+    const { currentSearchQuery } = this.private;
+    this.props.history.replace(`/search/${type}/${currentSearchQuery || ' '}`);
+
     this.setState({ currentResourceType: type });
+
+    this.props.onResult(type, currentSearchQuery || ' ');
   }
 
   get menu() {
@@ -71,10 +78,12 @@ class SearchHeader extends React.PureComponent {
   }
 
   search(searchQuery) {
-    window
-      .fetch(`https://swapi.co/api/${this.state.currentResourceType}/?search=${searchQuery}`)
-      .then(res => res.json())
-      .then(json => this.props.onResult(json));
+    const { currentResourceType } = this.state;
+    this.props.history.replace(`/search/${currentResourceType}/${searchQuery || ' '}`);
+
+    this.private.currentSearchQuery = searchQuery;
+
+    this.props.onResult(currentResourceType, searchQuery || ' ');
   }
 
   render() {
@@ -87,7 +96,7 @@ class SearchHeader extends React.PureComponent {
         </Anchor>
         <Search
           placeHolder={`Embrace the world of Star Wars! Search for ${this.state.currentResourceType}...`}
-          onDOMChange={this.onSwapiSearch}
+          onDOMChange={this.onHeaderSearch}
         />
         {this.menu}
       </Header>
@@ -96,13 +105,16 @@ class SearchHeader extends React.PureComponent {
 }
 
 SearchHeader.propTypes = {
+  history: React.PropTypes.shape({
+    replace: React.PropTypes.func.isRequired,
+  }).isRequired,
   onResult: PropTypes.func,
 };
 
 SearchHeader.defaultProps = {
-  onResult(result) {
-    console.log(result); // eslint-disable-line no-console
+  onResult(type, query) {
+    console.log(type, query); // eslint-disable-line no-console
   },
 };
 
-export default SearchHeader;
+export default withRouter(SearchHeader);

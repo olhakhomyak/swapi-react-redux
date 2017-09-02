@@ -2,7 +2,7 @@ import React from 'react';
 
 import GrommetHeading from 'grommet/components/Heading';
 
-class Heading extends React.PureComponent {
+class Heading extends React.Component {
   render() {
     return <GrommetHeading {...this.props} />;
   }

@@ -2,7 +2,7 @@ import React from 'react';
 
 import Section from '../../../common/components/Section';
 
-class Starships extends React.PureComponent {
+class Starships extends React.Component {
   render() {
     return (
       <Section>

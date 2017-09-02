@@ -2,7 +2,7 @@ import React from 'react';
 
 import GrommetSearch from 'grommet/components/Search';
 
-class Search extends React.PureComponent {
+class Search extends React.Component {
   render() {
     return <GrommetSearch {...this.props} />;
   }

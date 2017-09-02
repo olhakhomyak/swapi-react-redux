@@ -2,7 +2,7 @@ import React from 'react';
 
 import Section from '../../../common/components/Section';
 
-class Vehicles extends React.PureComponent {
+class Vehicles extends React.Component {
   render() {
     return (
       <Section>
