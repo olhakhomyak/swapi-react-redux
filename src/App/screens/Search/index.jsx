@@ -7,6 +7,7 @@ import Tiles from '../../../common/components/Tiles';
 import Meter from '../../../common/components/Meter';
 import Box from '../../../common/components/Box';
 import Value from '../../../common/components/Value';
+import Headline from '../../../common/components/Headline';
 import ListPlaceholder from '../../../common/components/ListPlaceholder';
 
 class Search extends React.Component {
@@ -14,7 +15,7 @@ class Search extends React.Component {
     super(props, context);
 
     this.state = {
-      isSearching: false,
+      isSearching: true,
       searchType: props.match.params.type,
       searchQuery: props.match.params.query,
       searchResult: {},
@@ -57,9 +58,9 @@ class Search extends React.Component {
   }
 
   get searchTiles() {
-    const { searchResult, searchType, searchQuery } = this.state;
+    const { searchResult, searchType } = this.state;
 
-    return this.state.searchResult.count ?
+    return (
       <Tiles
         fill
         onMore={this.onTilesMore}
@@ -69,8 +70,18 @@ class Search extends React.Component {
             item => <SearchPane key={item.url} type={searchType} data={item} />,
           )
         }
-      </Tiles> :
-      <ListPlaceholder emptyMessage={`Cannot find "${searchQuery}" anything in ${searchType} collection. :(`} />;
+      </Tiles>
+    );
+  }
+
+  get placeHolder() {
+    const { searchType, searchQuery } = this.state;
+
+    return this.state.isSearching ?
+      <ListPlaceholder /> :
+      <Headline align="center">
+        {`Cannot find "${searchQuery}" in ${searchType} collection. :(`}
+      </Headline>;
   }
 
   get meter() {
@@ -124,7 +135,13 @@ class Search extends React.Component {
   render() {
     return (
       <Section>
-        {this.searchTiles}
+        <Box align="center">
+          {
+            this.state.searchResult.count
+              ? this.searchTiles
+              : this.placeHolder
+          }
+        </Box>
         {this.meter}
       </Section>
     );

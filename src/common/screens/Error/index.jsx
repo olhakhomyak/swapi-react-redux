@@ -3,14 +3,17 @@ import PropTypes from 'prop-types';
 
 import Section from '../../components/Section';
 import Headline from '../../components/Headline';
+import Box from '../../components/Box';
 
 class Error extends React.Component {
   render() {
     return (
       <Section>
-        <Headline>
-          Oops! We cannot find {this.props.location.pathname}
-        </Headline>
+        <Box align="center">
+          <Headline align="center">
+            Oops! We cannot find {this.props.location.pathname}
+          </Headline>
+        </Box>
       </Section>
     );
   }

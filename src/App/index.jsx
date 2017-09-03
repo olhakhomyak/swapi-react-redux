@@ -17,8 +17,6 @@ import Starships from './screens/Starships';
 import Vehicles from './screens/Vehicles';
 import Error from '../common/screens/Error';
 
-import './index.scss';
-
 class App extends React.Component {
   render() {
     return (
